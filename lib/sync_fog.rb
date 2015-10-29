@@ -38,6 +38,8 @@ module SyncFog
     p "SyncFog: -- #{files.count} files found"
 
     # upload files
+    p "SyncFog: -- uploading"
+
     fog_uploader.upload( files, source_dir )
 
     # delete old files

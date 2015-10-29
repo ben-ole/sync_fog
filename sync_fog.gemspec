@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Uploads the precompiled assets in public/assets to any fog storage.}
   spec.description   = %q{Uploads the precompiled assets in public/assets to any fog storage.}
-  spec.homepage      = "http://github.com/ben-ole"
+  spec.homepage      = "https://github.com/ben-ole/sync_fog"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

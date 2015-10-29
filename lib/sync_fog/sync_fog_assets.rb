@@ -12,7 +12,7 @@ module SyncFog
 
     def list(dir=".")
 
-      root_path = Pathname.new dir
+      root_path = Pathname.new File.expand_path('..',dir) # one dir up
       files = []
 
       Dir.glob("#{dir}/**/*") do |file|
