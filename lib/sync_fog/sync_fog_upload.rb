@@ -12,8 +12,9 @@ module SyncFog
     def initialize(container,config)
       @fog_service = Fog::Storage.new(config)
       @container = @fog_service.directories.get(container)
-      @skip = SyncFog.configuration.skip_existing
+      @skip = SyncFog.configuration.skip_existing      
       @num_threads = SyncFog.configuration.num_threads
+      @meta = SyncFog.configuration.fog_attributes
     end
 
     def upload(files,dir)
@@ -31,7 +32,8 @@ module SyncFog
       return if @skip && @container.files.head(name)
 
       File.open(path) do |data|
-        @container.files.create(key: name, body: data)
+        @container.files.create(key: name, body: data, metadata: @meta)
+        @meta 
       end
     end
 
