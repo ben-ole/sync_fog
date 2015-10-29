@@ -39,15 +39,25 @@ module SyncFog
 
     # upload files
     p "SyncFog: -- uploading"
-
-    fog_uploader.upload( files, source_dir )
+    root_path = Pathname.new File.expand_path('..',source_dir) # one dir up
+    fog_uploader.upload( files, root_path )
 
     # delete old files
     p "SyncFog: -- cleaning up old files"
     fog_uploader.clean_remote( files )
 
+    # info
+    p "SyncFog: -- public url: #{fog_uploader.public_url}"
 
     p "SyncFog: -- done"
+  end
+
+  def self.public_url
+    container_name = SyncFog.configuration.fog_directory
+
+    fog_uploader = SyncFogUpload.new( container_name, SyncFog.configuration.fog_credentials )
+
+    p "SyncFog: -- public url: #{fog_uploader.public_url}"    
   end
 
 end

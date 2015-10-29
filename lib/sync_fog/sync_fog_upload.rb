@@ -10,13 +10,15 @@ module SyncFog
   class SyncFogUpload
 
     def initialize(container,config)
-      @fog_service = Fog::Storage.new(config)
-      @container = @fog_service.directories.get(container)
-      @skip = SyncFog.configuration.skip_existing      
-      @num_threads = SyncFog.configuration.num_threads
-      @meta = SyncFog.configuration.fog_attributes
+      
+      @fog_service  = Fog::Storage.new(config)
+      @container    = @fog_service.directories.get(container)
+      @skip         = SyncFog.configuration.skip_existing      
+      @num_threads  = SyncFog.configuration.num_threads
+      @meta         = SyncFog.configuration.fog_attributes
     end
 
+    ## uploading files
     def upload(files,dir)
 
       Parallel.map(files,in_threads: @num_threads) do |source_file|
@@ -37,6 +39,7 @@ module SyncFog
       end
     end
 
+    ## Removing files
     def clean_remote(keep_files)
       keep_files_string = keep_files.map{|f| f.to_s}      
 
@@ -50,6 +53,11 @@ module SyncFog
         p "SyncFog: > removing #{file.key}"
         file.destroy 
       end
+    end
+
+    ## infos
+    def public_url
+      @container.public_url
     end
 
   end

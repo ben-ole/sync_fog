@@ -13,4 +13,10 @@ namespace :sync_fog do
     SyncFog.sync
   end
 
+  desc "get public url of container"
+  task url: :environment do
+
+    SyncFog.public_url
+  end
+
 end
