@@ -1,35 +1,52 @@
+# SyncFog Gem
+# https://github.com/ben-ole/sync_fog
+# Benjamin Müller
+# 2015
+
 require 'fog'
+require 'parallel'
 
 module SyncFog
   class SyncFogUpload
 
-    def initialize(container)
-      @fog_service = Fog::Storage.new({
-        provider:            'OpenStack',
-        openstack_auth_url:  'https://identity-dd2a.cloudandheat.com:5000/v2.0/tokens/',
-        openstack_username:  'aktion@yorck.de',
-        openstack_api_key:   'Yorcker.2015'
-      })
-
+    def initialize(container,config)
+      @fog_service = Fog::Storage.new(config)
       @container = @fog_service.directories.get(container)
+      @skip = SyncFog.configuration.skip_existing
+      @num_threads = SyncFog.configuration.num_threads
     end
 
-    def upload(container,files)
+    def upload(files,dir)
 
-      files.each do |source_file|
-        source_name = File.basename( source_file )
-        @container.files.create key: source_name, body: File.open source_file
+      Parallel.map(files,in_threads: @num_threads) do |source_file|
+        upload_file(source_file,dir)
+      end      
+    end
+
+    def upload_file(source_file,dir)
+      path = dir + source_file
+      name = source_file.to_s      
+
+      return if File.directory?(path)
+      return if @skip && @container.files.head(name)
+
+      File.open(path) do |data|
+        @container.files.create(key: name, body: data)
       end
-      
     end
 
-    def clean_remote(container,keep_files)
-      
-      p "clean remote"
+    def clean_remote(keep_files)
+      keep_files_string = keep_files.map{|f| f.to_s}      
 
-      @container.files.each do |file|
-        p file
-        #file.destroy unless keep_files.include?(file)
+      Parallel.map(@container.files,in_threads: @num_threads) do |file|
+        remove_file(file,keep_files_string)
+      end
+    end
+
+    def remove_file(file,keep_files_string)
+      unless keep_files_string.include?(file.key)        
+        p "SyncFog: > removing #{file.key}"
+        file.destroy 
       end
     end
 

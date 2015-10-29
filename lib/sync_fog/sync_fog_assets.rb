@@ -1,16 +1,23 @@
+# SyncFog Gem
+# https://github.com/ben-ole/sync_fog
+# Benjamin Müller
+# 2015
+
 module SyncFog
   class SyncFogAssets
 
     def initialize
-      
+
     end
 
     def list(dir=".")
-      
-      # end
+
+      root_path = Pathname.new dir
       files = []
-      Dir.foreach(dir) do |file|      
-        files << File.join( Dir.pwd,file ) unless %w(. ..).include?(file)
+
+      Dir.glob("#{dir}/**/*") do |file|
+        path = Pathname.new file
+        files << path.relative_path_from(root_path) unless %w(. ..).include?(file)
       end
 
       files

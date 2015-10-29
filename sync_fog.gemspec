@@ -24,4 +24,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest', '~> 5.8', '>= 5.8.2'
 
   spec.add_runtime_dependency 'fog', '~> 1.35'
+  spec.add_runtime_dependency 'parallel', '~> 1.6'
 end
