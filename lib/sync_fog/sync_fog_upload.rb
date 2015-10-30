@@ -10,7 +10,7 @@ module SyncFog
   class SyncFogUpload
 
     def initialize(container,config)
-      
+
       @fog_service  = Fog::Storage.new(config)
       @container    = @fog_service.directories.get(container)
       @skip         = SyncFog.configuration.skip_existing      
@@ -50,7 +50,7 @@ module SyncFog
 
     def remove_file(file,keep_files_string)
       unless keep_files_string.include?(file.key)        
-        p "SyncFog: > removing #{file.key}"
+        p "SyncFog: -> removing #{file.key}"
         file.destroy 
       end
     end

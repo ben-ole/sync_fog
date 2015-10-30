@@ -1,29 +1,52 @@
 # SyncFog
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/sync_fog`. To experiment with that code, run `bin/console` for an interactive prompt.
+SyncFog is a super simple way to upload precompiled (static) assets on a file storage like S3, Rackspace or OpenStack. This is specifically useful if you are deploying to cloud containers like Heroku as you don't want your application containers being responsible for serving static files.
 
-TODO: Delete this and the text above, and describe your gem
+Once installed, SyncFog updates all changed files on every deploy (rake assets:precomile).
+
+This gem is an alternative to [asset_sync](https://github.com/AssetSync/asset_sync) as I've had trouble using that with OpenStack (Swift).
+
+- SyncFog is multi-threaded, so it's kind of fast
+- SyncFog can be used with any storage supported by the famous [fog gem](https://github.com/fog/fog).
+- SyncFog is easy to configure (using almost the same attributes as carrierwave!)
 
 ## Installation
 
-Add this line to your application's Gemfile:
+1. Add this line to your application's Gemfile:
 
-```ruby
-gem 'sync_fog'
-```
+  ```ruby
+  gem 'sync_fog'
+  ```
 
-And then execute:
+1. And then execute:
 
+    ```
     $ bundle
+    ```
+1. Run the generator to build a default config
 
-Or install it yourself as:
+    ```
+    $ rails generate sync_fog:install
+    ```
+1. Checkout and edit the config at ```/config/initializers/sync_fog.rb```
 
-    $ gem install sync_fog
+1. Get the public path of your new asset host
 
+    ```
+    $ rake sync_fog:url
+    ```
+1. And use the url as your asset_host in ```config/environments/production.rb```
+
+    ```
+    config.action_controller.asset_host = 'xyz'
+    ```
 ## Usage
 
-TODO: Write usage instructions here
+You can manually run the sync task
 
+    ```
+    $ rake sync_fog:sync
+    ```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -32,8 +55,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sync_fog. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
-
+Bug reports and pull requests are welcome on GitHub at https://github.com/ben-ole/sync_fog.
 
 ## License
 
