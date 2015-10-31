@@ -9,8 +9,4 @@ class SyncFogTest < Minitest::Test
   def test_listing_current_assets_folder
     SyncFog::SyncFogAssets.new.list
   end
-
-  def test_sync
-    SyncFog.sync
-  end
 end

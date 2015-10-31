@@ -9,6 +9,7 @@ This gem is an alternative to [asset_sync](https://github.com/AssetSync/asset_sy
 - SyncFog is multi-threaded, so it's kind of fast
 - SyncFog can be used with any storage supported by the famous [fog gem](https://github.com/fog/fog).
 - SyncFog is easy to configure (using almost the same attributes as carrierwave!)
+- SyncFog hooks in automatically on assets:precompile
 
 ## Installation
 
@@ -35,18 +36,25 @@ This gem is an alternative to [asset_sync](https://github.com/AssetSync/asset_sy
     ```
     $ rake sync_fog:url
     ```
-1. And use the url as your asset_host in ```config/environments/production.rb```
+1. And use the URL as your asset_host in ```config/environments/production.rb```
 
     ```
     config.action_controller.asset_host = 'xyz'
     ```
+
 ## Usage
 
-You can manually run the sync task
+- Get public URL of the asset container/bucket:
+
+    ```
+    $ rake sync_fog:url
+    ```
+- Manually trigger synchronization of assets. This task expects you've precompiled your assets before with ```rake assets:precompile```.
 
     ```
     $ rake sync_fog:sync
     ```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

@@ -20,3 +20,7 @@ namespace :sync_fog do
   end
 
 end
+
+if SyncFog.configuration.hook_enabled
+  Rake::Task["assets:precompile"].enhance [Rake::Task["sync_fog:sync"]]
+end
