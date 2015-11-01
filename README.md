@@ -1,3 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/sync_fog.svg)](https://badge.fury.io/rb/sync_fog)
+[![Code Climate](https://codeclimate.com/github/ben-ole/sync_fog/badges/gpa.svg)](https://codeclimate.com/github/ben-ole/sync_fog)
+
 # SyncFog
 
 SyncFog is a super simple way to upload precompiled (static) assets on a file storage like S3, Rackspace or OpenStack. This is specifically useful if you are deploying to cloud containers like Heroku as you don't want your application containers being responsible for serving static files.
@@ -10,6 +13,7 @@ This gem is an alternative to [asset_sync](https://github.com/AssetSync/asset_sy
 - SyncFog can be used with any storage supported by the famous [fog gem](https://github.com/fog/fog).
 - SyncFog is easy to configure (using almost the same attributes as carrierwave!)
 - SyncFog hooks in automatically on assets:precompile
+- tested with Rails 4.2 and OpenStack, but should work with Rails 3+
 
 ## Installation
 
