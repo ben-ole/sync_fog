@@ -2,9 +2,6 @@
 # https://github.com/ben-ole/sync_fog
 # Benjamin Müller
 # 2015
-
-require "rake"
-
 namespace :sync_fog do
 
   desc "sync assets with fog container"
@@ -21,6 +18,5 @@ namespace :sync_fog do
 
 end
 
-if SyncFog.configuration.hook_enabled
-  Rake::Task["assets:precompile"].enhance [Rake::Task["sync_fog:sync"]]
-end
+Rake::Task["assets:precompile"].enhance [Rake::Task["sync_fog:sync"]]
+

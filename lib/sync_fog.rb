@@ -7,7 +7,7 @@ require "sync_fog/version"
 require "sync_fog/configuration"
 require "sync_fog/sync_fog_upload"
 require "sync_fog/sync_fog_assets"
-require "sync_fog/tasks"
+require "sync_fog/sync_fog_railtie" if defined?(Rails)
 
 
 module SyncFog
@@ -19,8 +19,11 @@ module SyncFog
   def self.configure
     yield(configuration) if block_given?
   end
-  
+
   def self.sync
+
+    # check if hook is disabled
+    return unless SyncFog.configuration.hook_enabled
 
     p "SyncFog: -- started syncing"
 
