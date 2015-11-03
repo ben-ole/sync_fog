@@ -57,4 +57,10 @@ SyncFog.configure do |config|
   # #
   # config.hook_enabled = true
   
+  # ##
+  # # Enable/Disable upload only gzip variants and set correct headers.
+  # # Default is true
+  # #
+  # config.use_gzip = true
+  
 end

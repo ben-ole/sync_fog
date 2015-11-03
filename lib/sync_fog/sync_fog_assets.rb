@@ -20,7 +20,26 @@ module SyncFog
         files << path.relative_path_from(root_path) unless %w(. ..).include?(file)
       end
 
-      files
+      SyncFog.configuration.use_gzip ? filter_zip(files) : files
+    end
+
+
+    ## Helper
+    def filter_zip(files)
+      files_copy = files
+      files_strings = files.map{|f| f.to_s}
+
+      Parallel.map(files, in_threads: @num_threads) do |file|
+
+        # remove files which have an gz equivalent
+        unless File.extname(file) != ".gz" &&
+               files_strings.include?( "#{file.to_s}.gz" )
+           
+           files_copy << file
+        end
+      end
+
+      files_copy
     end
 
   end

@@ -54,6 +54,12 @@ module SyncFog
     #
     attr_accessor :hook_enabled
 
+    ##
+    # Enable/Disable upload only gzip variants and set correct headers.
+    # Default is true
+    #
+    attr_accessor :use_gzip
+
 
     def initialize #:nodoc:
       @fog_credentials = { }
@@ -69,6 +75,8 @@ module SyncFog
       @num_threads = 5
 
       @hook_enabled = true
+
+      @use_gzip = true
     end
   end
 

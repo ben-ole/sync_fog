@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'fog', '~> 1.35'
   spec.add_runtime_dependency 'parallel', '~> 1.6'
+  spec.add_runtime_dependency 'multi_mime', '~> 1.0'  
 end
