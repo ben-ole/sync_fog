@@ -35,11 +35,11 @@ module SyncFog
 
       return if File.directory?(path)
 
-      options = {key: name, body: data, metadata: meta, content_type: content_type}
+      options = {}
 
       if @check_zip && File.extname(path) == ".gz"
         name = name.gsub('.gz','')
-        options = {content_encoding: 'gzip', vary: 'Accept-Encoding' }.merge(options)
+        options = {content_encoding: 'gzip', vary: 'Accept-Encoding' }
       end
 
       return if @skip && @container.files.head(name)
@@ -47,7 +47,7 @@ module SyncFog
       content_type = MultiMime.type_for_path( name )
 
       File.open(path) do |data|
-        @container.files.create( options )
+        @container.files.create( {key: name, body: data, metadata: meta, content_type: content_type}.merge(options) )
       end
     end
 
