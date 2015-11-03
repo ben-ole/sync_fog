@@ -26,7 +26,7 @@ module SyncFog
 
     ## Helper
     def filter_zip(files)
-      files_copy = files
+      files_copy = []
       files_strings = files.map{|f| f.to_s}
 
       files.each do |file|
