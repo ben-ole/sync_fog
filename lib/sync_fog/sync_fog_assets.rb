@@ -29,7 +29,7 @@ module SyncFog
       files_copy = files
       files_strings = files.map{|f| f.to_s}
 
-      Parallel.map(files, in_threads: @num_threads) do |file|
+      Parallel.map(files, in_threads: SyncFog.configuration.num_threads) do |file|
 
         # remove files which have an gz equivalent
         unless File.extname(file) != ".gz" &&
