@@ -39,7 +39,7 @@ module SyncFog
 
       if @check_zip && File.extname(path) == ".gz"
         name = name.gsub('.gz','')
-        options = options.merge {content_encoding: 'gzip', vary: 'Accept-Encoding' }
+        options = {content_encoding: 'gzip', vary: 'Accept-Encoding' }.merge(options)
       end
 
       return if @skip && @container.files.head(name)
