@@ -47,7 +47,7 @@ module SyncFog
       content_type = MultiMime.type_for_path( name )
 
       File.open(path) do |data|
-        @container.files.create( key: name, body: data, metadata: meta, content_type: content_type, content_encoding: 'gzip' )
+        @container.files.create( key: name, body: data, metadata: meta, content_type: content_type, content_encoding: @check_zip ? 'gzip' : nil )
       end
     end
 
