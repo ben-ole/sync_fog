@@ -4,5 +4,5 @@
 # 2015
 
 module SyncFog
-  VERSION = "0.2.1"
+  VERSION = "0.2.2"
 end
