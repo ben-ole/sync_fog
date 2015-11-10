@@ -19,6 +19,6 @@ namespace :sync_fog do
 end
 
 Rake::Task["assets:clean"].enhance do
-  [Rake::Task["sync_fog:sync"]].invoke
+  Rake::Task["sync_fog:sync"].invoke
 end
 
